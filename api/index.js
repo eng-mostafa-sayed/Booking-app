@@ -3,6 +3,10 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 
 import authRoute from "./routes/auth.middleware.js";
+import usersRoutes from "./routes/users.routes";
+import hotelsRoutes from "./routes/hotels.routes";
+import roomsRoutes from "./routes/rooms.routes";
+
 const app = express();
 dotenv.config();
 
@@ -22,7 +26,10 @@ mongoose.connection.on("disconnected", () => {
 });
 
 ///middlewares
-app.use(authRoute);
+app.use("/api/auth", authRoute);
+app.use("/api/users", usersRoutes);
+app.use("/api/hotels", hotelsRoutes);
+app.use("/api/rooms", roomsRoutes);
 
 const port = 3000 || process.env.PORT;
 app.listen(port, () => {
