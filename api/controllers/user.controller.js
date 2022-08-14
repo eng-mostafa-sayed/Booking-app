@@ -38,3 +38,10 @@ export const getAllUsers = async (req, res, next) => {
     next(e);
   }
 };
+export const checkAuthentication = async (req, res, next) => {
+  try {
+    res.status(200).json("hello user you are logged in");
+  } catch (e) {
+    next(e);
+  }
+};
