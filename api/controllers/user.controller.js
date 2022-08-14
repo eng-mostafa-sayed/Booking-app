@@ -45,3 +45,17 @@ export const checkAuthentication = async (req, res, next) => {
     next(e);
   }
 };
+export const checkUser = async (req, res, next) => {
+  try {
+    res.status(200).json("hello user you are logged in");
+  } catch (e) {
+    next(e);
+  }
+};
+export const checkAdmin = async (req, res, next) => {
+  try {
+    res.status(200).json("hello Admin");
+  } catch (e) {
+    next(e);
+  }
+};

@@ -7,16 +7,21 @@ import {
   deleteUser,
   getAllUsers,
   checkAuthentication,
+  checkUser,
+  checkAdmin,
 } from "../controllers/User.controller.js";
-import { verifyToken } from "../helper/verify.token.helper.js";
+import { verifyUser, verifyAdmin } from "../helper/verify.token.helper.js";
 
-router.get("/checkauthentication", verifyToken, checkAuthentication);
+// router.get("/checkauthentication", verifyToken, checkAuthentication);
+// router.get("/checkuser/:id", verifyUser, checkUser);
+// router.get("/checkadmin", verifyAdmin, checkAdmin);
+
 //UPDATE
-router.put("/:id", updateUser);
+router.put("/:id", verifyUser, updateUser);
 //DELETE
-router.delete("/:id", deleteUser);
+router.delete("/:id", verifyUser, deleteUser);
 //GET
-router.get("/:id", getUser);
+router.get("/:id", verifyUser, getUser);
 //GETALL
-router.get("/", getAllUsers);
+router.get("/", verifyAdmin, getAllUsers);
 export default router;
