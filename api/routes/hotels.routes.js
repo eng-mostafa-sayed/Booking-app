@@ -1,6 +1,5 @@
 import express from "express";
 const router = express.Router();
-import Hotel from "../models/Hotel.model.js";
 import {
   createHotel,
   getHotel,
