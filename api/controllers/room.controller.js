@@ -21,7 +21,7 @@ export const createRoom = async (req, res, next) => {
   }
 };
 
-export const updateRoom = async (req, res) => {
+export const updateRoom = async (req, res, next) => {
   try {
     const updatedRoom = await Room.findByIdAndUpdate(
       req.params.id,
@@ -35,26 +35,37 @@ export const updateRoom = async (req, res) => {
     res.status(500).send(e.message);
   }
 };
-export const deleteRoom = async (req, res) => {
+export const deleteRoom = async (req, res, next) => {
   try {
-    const Room = await Room.findByIdAndDelete(req.params.id);
+    const hotelId = req.params.hotelid;
+
+    const room = await Room.findByIdAndDelete(req.params.id);
+
+    try {
+      await Hotel.findByIdAndUpdate(hotelId, {
+        $pull: { rooms: req.params.id },
+      });
+    } catch (error) {
+      next(error);
+    }
+
     res.status(200).json("room has been deleted");
   } catch (e) {
     res.status(500).send(e.message);
   }
 };
-export const getRoom = async (req, res) => {
+export const getRoom = async (req, res, next) => {
   try {
-    const Room = await Room.findById(req.params.id);
-    res.status(200).json(Room);
+    const room = await Room.findById(req.params.id);
+    res.status(200).json(room);
   } catch (e) {
     res.status(500).send(e.message);
   }
 };
 export const getAllRooms = async (req, res, next) => {
   try {
-    const Rooms = await Room.find();
-    res.status(200).json(Rooms);
+    const rooms = await Room.find();
+    res.status(200).json(rooms);
   } catch (e) {
     next(e);
   }
